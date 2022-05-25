@@ -35,7 +35,7 @@ void kill(string command) {
 }
 
 int main() {
- SetEnvironmentVariable(L"PROC_TO_KILL", L"Telegram.exe ");
+ SetEnvironmentVariable(L"PROC_TO_KILL", L"Telegram");
  print_active_processes();
  cout << "enter command: ";
  string command;

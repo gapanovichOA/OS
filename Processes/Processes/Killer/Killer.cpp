@@ -25,6 +25,14 @@ void kill(const wchar_t* szExeName) {
  CloseHandle(hSnapshot);
 }
 
+void killByID(int id) {
+ HANDLE processToKill = OpenProcess(PROCESS_TERMINATE, FALSE, (DWORD)id);
+ if (processToKill != NULL) {
+  TerminateProcess(processToKill, 0);
+  CloseHandle(processToKill);
+ }
+}
+
 int main(int argc, char* argv[]) {
 
  LPCSTR name = "PROC_TO_KILL";
@@ -39,6 +47,19 @@ int main(int argc, char* argv[]) {
    const wchar_t* wchr = wstr.c_str();
    kill(wchr);
   }
+ }
+ std::istringstream stream(argv[0]);
+ int id = 0;
+ stream >> id;
+ if (id == 0) {
+  std::string str(argv[0]);
+  str += ".exe";
+  std::wstring wstr = std::wstring(str.begin(), str.end());
+  const wchar_t* wchr = wstr.c_str();
+  kill(wchr);
+ }
+ else {
+  killByID(id);
  }
  return 0;
 }
